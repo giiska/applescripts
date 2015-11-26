@@ -74,8 +74,7 @@ set AppleScript's text item delimiters to old_delim
 
 --MAKE THE ITEM IN EVERNOTE
 tell application "Evernote"
-    --set EVNote to (create note with text url_list title NoteTitle)
-    set EVNote to find note 'https://www.evernote.com/shard/s224/nl/2147483647/1bf8540c-4a5b-4883-b1b9-01261e91033a/'
+    set EVNote to (create note with text url_list title NoteTitle)
 end tell
 
 --NOTIFY RESULTS
