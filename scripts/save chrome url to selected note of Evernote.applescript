@@ -17,6 +17,7 @@ delay 0.2
 
 log tabTitle
 log tabUrl
+--return
 
 tell application "Evernote"
     try
@@ -24,10 +25,14 @@ tell application "Evernote"
         set theNote to first item in theNotes
         set notifyTitle to "[note]: " & (get title of theNote)
         try
-            --tell theNote to append html ("<br/>" & tabTitle)
-            tell theNote to append html "<br/><br/><br/><br/>" & tabTitle & "<br/>" & tabUrl
-            --tell theNote to append html tabTitle & tabUrl 
-            --tell theNote to append html tabUrl
+            set noteHTML to (HTML content of item 1 of theNote)
+            --log noteHTML
+            --return
+            --log ("<br/><br/><br/><br/><br/><a href=\"" & tabUrl & "\">" & tabTitle & "</a>")
+            set editHTML to noteHTML & ("<br/><a href=\"" & tabUrl & "\">" & tabTitle & "</a>")
+            --use replace instead of append
+            set (HTML content of item 1 of theNote) to editHTML
+            --tell theNote to append html ("<br/><br/><br/><br/>" & tabTitle & "<br/>" & tabUrl)
         on error errMsg
             log "error: "  & errMsg
             set notifyTitle to "ERROR: " & errMsg
