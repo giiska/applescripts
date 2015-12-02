@@ -24,21 +24,15 @@ tell application "Evernote"
         set theNotes to selection
         set theNote to first item in theNotes
         set notifyTitle to "[note]: " & (get title of theNote)
+        set addContent to "<br/><a href=\"" & tabUrl & "\">" & tabTitle & "</a>"
         try
-            set noteHTML to (HTML content of item 1 of theNote)
-            --log noteHTML
-            --return
-            --log ("<br/><br/><br/><br/><br/><a href=\"" & tabUrl & "\">" & tabTitle & "</a>")
-            set editHTML to noteHTML & ("<br/><a href=\"" & tabUrl & "\">" & tabTitle & "</a>")
-            --use replace instead of append
-            set (HTML content of item 1 of theNote) to editHTML
-            --tell theNote to append html ("<br/><br/><br/><br/>" & tabTitle & "<br/>" & tabUrl)
+            append theNote html addContent
         on error errMsg
-            log "error: "  & errMsg
-            set notifyTitle to "ERROR: " & errMsg
+            -- If got the error 'Evernote got an error: Operation would exceed monthly upload allowance. '
+            set noteHTML to (HTML content of item 1 of theNote)
+            set editHTML to noteHTML & addContent
+            set (HTML content of item 1 of theNote) to editHTML
         end try
         display notification tabUrl with title notifyTitle subtitle "《" & tabTitle & "》"
-        --tell theNote to append html "<br/><br/>" & tabTitle & "<br/>" & tabUrl 
-        --tell theNote to append text "23"
     end try
 end tell
