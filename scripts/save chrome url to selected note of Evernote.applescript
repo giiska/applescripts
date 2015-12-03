@@ -24,14 +24,18 @@ tell application "Evernote"
         set theNotes to selection
         set theNote to first item in theNotes
         set notifyTitle to "[note]: " & (get title of theNote)
-        set addContent to "<br/><a href=\"" & tabUrl & "\">" & tabTitle & "</a>"
+        set addContent to "<br/>" & tabTitle & "<br/>" & "<a href=\"" & tabUrl & "\">" & tabUrl & "</a>"
         try
             append theNote html addContent
         on error errMsg
             -- If got the error 'Evernote got an error: Operation would exceed monthly upload allowance. '
-            set noteHTML to (HTML content of item 1 of theNote)
-            set editHTML to noteHTML & addContent
-            set (HTML content of item 1 of theNote) to editHTML
+            try
+                set noteHTML to (HTML content of item 1 of theNote)
+                set editHTML to noteHTML & addContent
+                set (HTML content of item 1 of theNote) to editHTML
+            on error errMsg
+                set notifyTitle to "Error: " & errMsg
+            end try
         end try
         display notification tabUrl with title notifyTitle subtitle "《" & tabTitle & "》"
     end try
