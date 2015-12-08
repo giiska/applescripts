@@ -1,3 +1,4 @@
+set value11 to missing value
 tell application "Google Chrome"
 	--activate
 	tell application "System Events"
