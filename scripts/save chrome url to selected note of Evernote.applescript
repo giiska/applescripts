@@ -8,6 +8,10 @@ tell application "Google Chrome"
     --activate
     tell application "System Events"
         set activeApp to name of application processes whose frontmost is true
+        --Don't execute when active window is not chrome or Evernote
+        if (activeApp as string) is not equal to "Evernote" and (activeApp as string) is not equal to "Google Chrome" then
+            error number -128
+        end if
         tell application process "Google Chrome"
             set tabUrl to value of text field 1 of toolbar 1 of window 1
             set tabTitle to (title of window 1)
@@ -30,13 +34,13 @@ tell application "Evernote"
         try
             append theNote html addContent
         on error errMsg
-            display notification "got the error 'Evernote got an error: Operation would exceed monthly upload allowance. '"
+            display notification "Error with append method."
             try
                 set noteHTML to (HTML content of item 1 of theNote)
                 set editHTML to noteHTML & addContent
                 set (HTML content of item 1 of theNote) to editHTML
             on error errMsg
-                display notification "Ok, we failed."
+                display notification "Failed all."
             end try
         end try
         -- Only notify when Evernote is not mostfront
