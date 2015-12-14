@@ -14,7 +14,7 @@ tell application "Google Chrome"
         end if
         tell application process "Google Chrome"
             set tabUrl to value of text field 1 of toolbar 1 of window 1
-            -- Make sure start with http
+            -- Make sure start with http or https
             if (characters 4 thru 1 of tabUrl as string) is not equal to "http" then
                 set tabUrl to "http://" & tabUrl
             end if
