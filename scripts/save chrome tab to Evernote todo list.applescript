@@ -4,24 +4,25 @@ set theNote to missing value
 set tabTitle to missing value
 set activeApp to missing value
 
-tell application "Google Chrome"
-    --activate
-    tell application "System Events"
-        set activeApp to name of application processes whose frontmost is true
-        --Don't execute when active window is not chrome or Evernote
-        if (activeApp as string) is not equal to "Evernote" and (activeApp as string) is not equal to "Google Chrome" then
-            error number -128
+
+tell application "System Events"
+    set activeApp to name of application processes whose frontmost is true
+    --Don't execute when active window is not chrome or Evernote
+    --TODO: optimize this logic check
+    if (activeApp as string) is not equal to "Evernote" and (activeApp as string) is not equal to "Google Chrome"  and (activeApp as string) is not equal to "Google Chrome Canary" then
+        error number -128
+    end if
+    --TODO: optimize (activeApp as string)
+    tell application process (activeApp as string)
+        set tabUrl to value of text field 1 of toolbar 1 of window 1
+        -- Make sure start with http or https
+        if (characters 4 thru 1 of tabUrl as string) is not equal to "http" then
+            set tabUrl to "http://" & tabUrl
         end if
-        tell application process "Google Chrome"
-            set tabUrl to value of text field 1 of toolbar 1 of window 1
-            -- Make sure start with http
-            if (characters 4 thru 1 of tabUrl as string) is not equal to "http" then
-                set tabUrl to "http://" & tabUrl
-            end if
-            set tabTitle to (title of window 1)
-        end tell
+        set tabTitle to (title of window 1)
     end tell
 end tell
+
 
 --delay 0.2
 
