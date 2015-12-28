@@ -1,3 +1,23 @@
+(*
+Save Chrome Tab to Selected Note of Evernote
+VERSION 1.0
+Dec 28, 2015
+
+// AUTHORED BY:
+    John Xiao (http://zaishanda.com/)
+
+// UPDATE NOTICES
+    ** Follow @jfxiao07 on Twitter, Facebook, Google Plus, and ADN for Update Notices! **
+
+// License
+    MIT
+*)
+
+(* 
+======================================
+// MAIN PROGRAM 
+======================================
+*)
 
 set tabUrl to missing value
 set theNote to missing value
