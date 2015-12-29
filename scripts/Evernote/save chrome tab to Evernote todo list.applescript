@@ -54,7 +54,7 @@ tell application "Evernote"
     try
         set myNote to (find notes "0000000 this is a read later")
         set theNote to item 1 of myNote -- return one note
-        set notifyTitle to "[note]: " & (get title of theNote)
+        set notifyTitle to "[" & (get name of (get notebook of theNote)) & "]" & (get title of theNote)
         set addContent to "<br/><br/>" & tabTitle & "<br/>" & "<a href=\"" & tabUrl & "\">" & tabUrl & "</a>"
         try
             append theNote html addContent

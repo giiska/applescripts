@@ -52,7 +52,7 @@ tell application "Evernote"
     try
         set theNotes to selection
         set theNote to first item in theNotes
-        set notifyTitle to "[note]: " & (get title of theNote)
+        set notifyTitle to "[" & (get name of (get notebook of theNote)) & "]" & (get title of theNote)
         set addContent to "<br/><br/>" & tabTitle & "<br/>" & "<a href=\"" & tabUrl & "\">" & tabUrl & "</a>"
         try
             append theNote html addContent
