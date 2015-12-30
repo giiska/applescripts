@@ -1,6 +1,6 @@
 (*
 Save Chrome Tab to Selected Note of Evernote
-VERSION 1.0
+VERSION 1.1
 Dec 28, 2015
 
 // AUTHORED BY:
@@ -34,6 +34,9 @@ tell application "System Events"
     --TODO: optimize (activeApp as string)
     tell application process (activeApp as string)
         set tabUrl to value of text field 1 of toolbar 1 of window 1
+        if tabUrl = "" then
+            error number -128
+        end if
         -- Make sure start with http or https
         if (characters 4 thru 1 of tabUrl as string) is not equal to "http" then
             set tabUrl to "http://" & tabUrl
@@ -50,6 +53,12 @@ end tell
 
 tell application "Evernote"
     try
+        set findUrlInNotes to (find notes tabUrl) -- returns a list of notes
+        if not findUrlInNotes = {} then
+            display notification "已存在于：" & (get title of (item 1 of findUrlInNotes))
+            error number -128
+        end if
+
         set theNotes to selection
         set theNote to first item in theNotes
         set notifyTitle to "[" & (get name of (get notebook of theNote)) & "]" & (get title of theNote)
