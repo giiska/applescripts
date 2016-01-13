@@ -23,7 +23,6 @@ set theNote to missing value
 set tabTitle to missing value
 set activeApp to missing value
 
-
 tell application "System Events"
     set activeApp to name of application processes whose frontmost is true
     --Don't execute when active window is not chrome or Evernote
@@ -41,6 +40,7 @@ tell application "System Events"
         if (characters 4 thru 1 of tabUrl as string) is not equal to "http" then
             set tabUrl to "http://" & tabUrl
         end if
+        --set tabDescription to the text returned of (display dialog "添加描述" default answer "")
         set tabTitle to (title of window 1)
     end tell
 end tell
@@ -63,6 +63,9 @@ tell application "Evernote"
         set myNote to (find notes "0000000 this is a read later")
         set theNote to item 1 of myNote -- return one note
         set notifyTitle to "[" & (get name of (get notebook of theNote)) & "]" & (get title of theNote)
+        --if tabDescription is not equal to "" then
+            --set tabTitle to tabDescription & "<br/>" & tabTitle
+        --end if
         set addContent to "<br/><br/>" & tabTitle & "<br/>" & "<a href=\"" & tabUrl & "\">" & tabUrl & "</a>"
         try
             append theNote html addContent

@@ -1,7 +1,6 @@
 (*
 Save Chrome Tab to Selected Note of Evernote
 VERSION 1.1
-Dec 28, 2015
 
 // AUTHORED BY:
     John Xiao (http://zaishanda.com/)
@@ -41,6 +40,7 @@ tell application "System Events"
         if (characters 4 thru 1 of tabUrl as string) is not equal to "http" then
             set tabUrl to "http://" & tabUrl
         end if
+        --set tabDescription to the text returned of (display dialog "添加描述" default answer "")
         set tabTitle to (title of window 1)
     end tell
 end tell
@@ -62,6 +62,9 @@ tell application "Evernote"
         set theNotes to selection
         set theNote to first item in theNotes
         set notifyTitle to "[" & (get name of (get notebook of theNote)) & "]" & (get title of theNote)
+        --if tabDescription is not equal to "" then
+            --set tabTitle to tabDescription & "<br/>" & tabTitle
+        --end if
         set addContent to "<br/><br/>" & tabTitle & "<br/>" & "<a href=\"" & tabUrl & "\">" & tabUrl & "</a>"
         try
             append theNote html addContent
