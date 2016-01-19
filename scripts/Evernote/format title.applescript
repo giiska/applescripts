@@ -24,12 +24,6 @@ tell application "System Events"
   end if
 
   tell application process (appName as string)
-
-    click ((pop up button 1 of splitter group 0 of splitter group 0 of window 1) whose name is "Text Size")
-    -- 9 is font size 36px
-    -- 10 will be font size 48px
-    click menu item 9 of menu of pop up button 2 of splitter group 0 of splitter group 0 of window 1
-
     set isBold to value of ((checkbox 1 of splitter group 0 of splitter group 0 of window 1) whose description is "Bold") as boolean
     if isBold is false then
       -- Don's know why clicking checkbox not work here, use keystroke temporarily
@@ -37,6 +31,9 @@ tell application "System Events"
       keystroke "b" using command down
     end if
 
-
+    click ((pop up button 1 of splitter group 0 of splitter group 0 of window 1) whose name is "Text Size")
+    -- 9 is font size 36px
+    -- 10 will be font size 48px
+    click menu item 9 of menu of pop up button 2 of splitter group 0 of splitter group 0 of window 1
   end tell
 end tell
