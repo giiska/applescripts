@@ -18,6 +18,16 @@ VERSION 1.1
 ======================================
 *)
 
+-- source: http://henrysmac.org/blog/2014/1/4/formatting-short-dates-in-applescript.html
+on todayISOformat()
+    set theDate to current date
+    set y to text -4 thru -1 of ("0000" & (year of theDate))
+    set m to text -2 thru -1 of ("00" & ((month of theDate) as integer))
+    set d to text -2 thru -1 of ("00" & (day of theDate))
+    return y & "-" & m & "-" & d
+end todayISOformat
+set addDate to todayISOformat()
+
 set tabUrl to missing value
 set theNote to missing value
 set tabTitle to missing value
@@ -66,7 +76,7 @@ tell application "Evernote"
         --if tabDescription is not equal to "" then
             --set tabTitle to tabDescription & "<br/>" & tabTitle
         --end if
-        set addContent to "<br/><br/>" & tabTitle & "<br/>" & "<a href=\"" & tabUrl & "\">" & tabUrl & "</a>"
+        set addContent to "<br/><br/>" & tabTitle & "<br/>" & addDate & "<br/>" & "<a href=\"" & tabUrl & "\">" & tabUrl & "</a>"
         try
             append theNote html addContent
         on error errMsg
