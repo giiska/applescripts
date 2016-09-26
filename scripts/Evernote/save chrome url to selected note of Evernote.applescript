@@ -95,7 +95,7 @@ tell application "Evernote"
         --if tabDescription is not equal to "" then
             --set tabTitle to tabDescription & "<br/>" & tabTitle
         --end if
-        set addContent to "<br/><br/>" & tabTitle & "<br/>" & addDateAndTime & "<br/>" & "<a href=\"" & tabUrl & "\">" & tabUrl & "</a>"
+        set addContent to "<br/><br/>" & addDateAndTime & "<br/>" & tabTitle & "<br/>" & "<a href=\"" & tabUrl & "\">" & tabUrl & "</a>"
         try
             append theNote html addContent
         on error errMsg
