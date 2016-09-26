@@ -18,6 +18,26 @@ VERSION 1.1
 ======================================
 *)
 
+-- source: http://alvinalexander.com/blog/post/mac-os-x/an-applescript-subroutine-that-returns-current-time-as-hours-mi
+on getTimeInHoursAndMinutes()
+    -- Get the "hour"
+    set timeStr to time string of (current date)
+    set Pos to offset of ":" in timeStr
+    set theHour to characters 1 thru (Pos - 1) of timeStr as string
+    set timeStr to characters (Pos + 1) through end of timeStr as string
+    
+    -- Get the "minute"
+    set Pos to offset of ":" in timeStr
+    set theMin to characters 1 thru (Pos - 1) of timeStr as string
+    set timeStr to characters (Pos + 1) through end of timeStr as string
+    
+    --Get "AM or PM"
+    set Pos to offset of " " in timeStr
+    set theSfx to characters (Pos + 1) through end of timeStr as string
+    
+    return (theHour & ":" & theMin & " " & theSfx) as string
+end getTimeInHoursAndMinutes
+
 -- source: http://henrysmac.org/blog/2014/1/4/formatting-short-dates-in-applescript.html
 on todayISOformat()
     set theDate to current date
@@ -26,7 +46,7 @@ on todayISOformat()
     set d to text -2 thru -1 of ("00" & (day of theDate))
     return y & "-" & m & "-" & d
 end todayISOformat
-set addDate to todayISOformat()
+set addDateAndTime to (todayISOformat() & " " & getTimeInHoursAndMinutes())
 
 set tabUrl to missing value
 set theNote to missing value
@@ -75,7 +95,7 @@ tell application "Evernote"
         --if tabDescription is not equal to "" then
             --set tabTitle to tabDescription & "<br/>" & tabTitle
         --end if
-        set addContent to "<br/><br/>" & tabTitle & "<br/>" & addDate & "<br/>" & "<a href=\"" & tabUrl & "\">" & tabUrl & "</a>"
+        set addContent to "<br/><br/>" & tabTitle & "<br/>" & addDateAndTime & "<br/>" & "<a href=\"" & tabUrl & "\">" & tabUrl & "</a>"
         try
             append theNote html addContent
         on error errMsg
